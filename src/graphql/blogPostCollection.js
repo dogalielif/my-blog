@@ -1,11 +1,11 @@
-const getAllBlogPosts = `
+import contentfulBase from './contentfulBase';
+
+const getAllBlogPostsGQL = `
   query BlogPosts {
     blogPostCollection {
       total
       items {
-        sys {
-          id
-        }
+        ${contentfulBase}
         title
         slug
         tileDescription
@@ -16,4 +16,4 @@ const getAllBlogPosts = `
     }
   }`;
 
-  export default getAllBlogPosts;
+  export default getAllBlogPostsGQL;

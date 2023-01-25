@@ -1,11 +1,11 @@
-import BlogPost from "@/components/BlogPost";
+import Banner from "@/components/banner/Banner";
 
 interface mapping {
   [key: string]: () => JSX.Element
 }
 
 const componentMapping: mapping = {
-  'BlogPost': BlogPost
+  'Banner': Banner
 }
 
 export default componentMapping;

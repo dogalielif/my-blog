@@ -1,14 +1,13 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css'
-import { getAllContentfulBlogPosts } from '@/utils/apolloContentfulClient';
+import { getAllContentfulBlogPosts, getHomePage } from '@/utils/apolloContentfulClient';
 import componentMapping from '@/utils/contentfulComponentMapping';
 import { ContentfulBase } from '@/interfaces/contentfulBase';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: any) {
-  console.log(props);
   return (
     <>
       <Head>
@@ -19,10 +18,10 @@ export default function Home(props: any) {
       </Head>
       <main className={styles.main}>
         <div>
-          {props.posts.map((item: ContentfulBase) => {
+          {props.page.blocksCollection.items.map((item: ContentfulBase) => {
             const componentName = item?.['__typename']
             const Component = componentMapping[componentName];
-            return <Component key={item.sys.id} {...props} />;
+            return Component ? <Component key={item.sys.id} {...item} /> : <div>In Progress...</div>;
           })}
         </div>
       </main>
@@ -42,11 +41,19 @@ export default function Home(props: any) {
 //   };
 // }
 
+// export async function getServerSideProps() {
+//  const blogPosts = await getAllContentfulBlogPosts()
+//   return {
+//     props: {
+//       posts: blogPosts,
+//     },
+//   };
+// }
 export async function getServerSideProps() {
- const blogPosts = await getAllContentfulBlogPosts()
+ const page = await getHomePage()
   return {
     props: {
-      posts: blogPosts,
+      page: page,
     },
   };
 }

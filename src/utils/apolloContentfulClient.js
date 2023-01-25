@@ -1,11 +1,13 @@
-import getAllBlogPosts from "@/graphql/blogPostCollection";
+import getAllBlogPostsGQL from "@/graphql/blogPostCollection";
+import getHomePageGQL from "@/graphql/homePage";
 import { ApolloClient, InMemoryCache, HttpLink, from, ApolloLink, gql } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 
 const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
   if (graphQLErrors) {
+    console.log('graphql error', JSON.stringify(graphQLErrors))
     for (let err of graphQLErrors) {
-      switch (err.extensions.code) {
+      switch (err?.extensions?.code) {
         // Apollo Server sets code to UNAUTHENTICATED
         // when an AuthenticationError is thrown in a resolver
         case "UNAUTHENTICATED":
@@ -46,9 +48,18 @@ const client = new ApolloClient({
 export const getAllContentfulBlogPosts = async () => {
   const { data } = await client.query({
   query: gql`
-    ${getAllBlogPosts}`,
+    ${getAllBlogPostsGQL}`,
   });
   return data.blogPostCollection.items;
+}
+
+export const getHomePage = async () => {
+  const { data, error } = await client.query({
+  query: gql`
+    ${getHomePageGQL}`,
+  });
+  console.log('hi', error);
+  return data.pageCollection.items[0];
 }
 
 export default client;
