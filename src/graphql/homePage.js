@@ -1,5 +1,5 @@
 import contentfulBase from "./contentfulBase";
-import banner from "./banner";
+import carousel from "./carousel";
 
 const getHomePageGQL = `
   query HomePage {
@@ -9,9 +9,9 @@ const getHomePageGQL = `
         title
         blocksCollection(limit: 10) {
           items {
-            ...on Banner {
+            ...on Carousel {
               ${contentfulBase}
-              ${banner}
+              ${carousel}
             }
           }
         }

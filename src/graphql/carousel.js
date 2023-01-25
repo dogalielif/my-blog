@@ -1,19 +1,20 @@
-import contentfulBase from "./contentfulBase";
+import contentfulBase from './contentfulBase'
 
-const banner = `
+const carousel = `
     title
     itemsCollection {
       total
       items{
         ${contentfulBase}
-        bannerImage {
+        image {
           url
         }
+        title
         description
         pageReference {
           ${contentfulBase}
         }
       }
-    }`;
+    }`
 
-  export default banner;
+export default carousel

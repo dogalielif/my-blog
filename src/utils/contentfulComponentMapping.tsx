@@ -1,11 +1,11 @@
-import Banner from "@/components/banner/Banner";
+import Carousel from "@/components/carousel/Carousel";
 
 interface mapping {
   [key: string]: () => JSX.Element
 }
 
 const componentMapping: mapping = {
-  'Banner': Banner
+  'Carousel': Carousel
 }
 
 export default componentMapping;

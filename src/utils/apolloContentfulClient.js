@@ -54,11 +54,10 @@ export const getAllContentfulBlogPosts = async () => {
 }
 
 export const getHomePage = async () => {
-  const { data, error } = await client.query({
+  const { data } = await client.query({
   query: gql`
     ${getHomePageGQL}`,
   });
-  console.log('hi', error);
   return data.pageCollection.items[0];
 }
 
