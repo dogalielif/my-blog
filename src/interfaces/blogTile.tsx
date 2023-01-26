@@ -7,7 +7,7 @@ export interface BlogTilesProps {
   }
 }
 
-interface BlogTile extends ContentfulBase {
+export interface BlogTile extends ContentfulBase {
   title: string
   slug: string
   tileDescription: string

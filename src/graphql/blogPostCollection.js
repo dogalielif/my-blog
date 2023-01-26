@@ -1,6 +1,6 @@
-import contentfulBase from './contentfulBase';
+import contentfulBase from './contentfulBase'
 
-const getAllBlogPostsGQL = `
+export const getAllBlogPostsGQL = `
   query BlogPosts {
     blogPostCollection {
       total
@@ -14,6 +14,36 @@ const getAllBlogPostsGQL = `
         }
       }
     }
-  }`;
+  }`
 
-  export default getAllBlogPostsGQL;
+export const getAllBlogPostsBySlugGQL = (slug) => `
+  query BlogPosts {
+    blogPostCollection(limit: 1, where: {slug: "${slug}"}) {
+      total
+      items {
+        ${contentfulBase}
+        title
+        slug
+        image {
+          url
+        }
+        body {
+          json
+          links {
+            assets {
+              block {
+                sys {
+                  id
+                }
+                url
+                title
+                width
+                height
+                description
+              }
+            }
+          }
+        }
+      }
+    }
+  }`
