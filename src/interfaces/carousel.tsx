@@ -1,6 +1,6 @@
 import { ContentfulBase } from './contentfulBase'
 
-export interface CarouselProps extends ContentfulBase {
+export interface CarouselProps {
   title: string
   itemsCollection: {
     items: CarouselImage[]

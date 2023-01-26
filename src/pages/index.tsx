@@ -1,9 +1,12 @@
 import Head from 'next/head'
-import { Inter } from '@next/font/google';
+import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import { getAllContentfulBlogPosts, getHomePage } from '@/utils/apolloContentfulClient';
-import componentMapping from '@/utils/contentfulComponentMapping';
-import { ContentfulBase } from '@/interfaces/contentfulBase';
+import {
+  getAllContentfulBlogPosts,
+  getHomePage,
+} from '@/utils/apolloContentfulClient'
+import componentMapping from '@/utils/contentfulComponentMapping'
+import { ContentfulBase } from '@/interfaces/contentfulBase'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,11 +21,15 @@ export default function Home(props: any) {
         <link href="/dist/output.css" rel="stylesheet" />
       </Head>
       <main className={styles.main}>
-          {props.page.blocksCollection.items.map((item: ContentfulBase) => {
-            const componentName = item?.['__typename']
-            const Component = componentMapping[componentName];
-            return Component ? <Component key={item.sys.id} {...item} /> : <div>In Progress...</div>;
-          })}
+        {props.page.blocksCollection.items.map((item: ContentfulBase) => {
+          const componentName = item?.['__typename']
+          const Component = componentMapping[componentName]
+          return Component ? (
+            <Component key={item.sys.id} {...item} />
+          ) : (
+            <div>In Progress...</div>
+          )
+        })}
       </main>
     </>
   )
@@ -49,10 +56,10 @@ export default function Home(props: any) {
 //   };
 // }
 export async function getServerSideProps() {
- const page = await getHomePage()
+  const page = await getHomePage()
   return {
     props: {
       page: page,
     },
-  };
+  }
 }

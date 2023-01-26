@@ -1,11 +1,13 @@
-import Carousel from "@/components/carousel/Carousel";
+import BlogTiles from '@/components/blogTile/BlogTiles'
+import Carousel from '@/components/carousel/Carousel'
 
 interface mapping {
-  [key: string]: () => JSX.Element
+  [key: string]: (props: any) => JSX.Element
 }
 
 const componentMapping: mapping = {
-  'Carousel': Carousel
+  Carousel: Carousel,
+  BlogTiles: BlogTiles,
 }
 
-export default componentMapping;
+export default componentMapping

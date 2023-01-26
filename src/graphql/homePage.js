@@ -1,5 +1,6 @@
-import contentfulBase from "./contentfulBase";
-import carousel from "./carousel";
+import contentfulBase from './contentfulBase'
+import carousel from './carousel'
+import blogTile from './blogTile'
 
 const getHomePageGQL = `
   query HomePage {
@@ -13,10 +14,14 @@ const getHomePageGQL = `
               ${contentfulBase}
               ${carousel}
             }
+            ...on BlogTiles {
+              ${contentfulBase}
+              ${blogTile}
+            }
           }
         }
       }
     }
-  }`;
+  }`
 
-  export default getHomePageGQL;
+export default getHomePageGQL
