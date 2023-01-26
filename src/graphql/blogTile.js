@@ -9,8 +9,19 @@ const blogTile = `
         slug
         title
         tileDescription
+        tileImage {
+          url
+          title
+          width
+          height
+          description
+        }
         image {
           url
+          title
+          width
+          height
+          description
         }
       }
     }`

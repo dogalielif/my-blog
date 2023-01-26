@@ -1,4 +1,4 @@
-import { ContentfulBase } from './contentfulBase'
+import { ContentfulBase, Image } from './contentfulBase'
 
 export interface BlogTilesProps {
   title: string
@@ -11,7 +11,6 @@ export interface BlogTile extends ContentfulBase {
   title: string
   slug: string
   tileDescription: string
-  image: {
-    url: string
-  }
+  tileImage: Image
+  image: Image
 }

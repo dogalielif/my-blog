@@ -1,9 +1,24 @@
-.tilesContainer {
+/* .tilesContainer {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 0.5rem;
-  min-height: 200px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  row-gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+} */
+.tilesContainer {
+  width: 100%;
+  display: flex;
+  row-gap: 1rem;
+  justify-content: space-between;
+}
+.tilesContainer2 {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 .tile {
@@ -16,4 +31,54 @@
 .tileImage {
   object-fit: 'contain';
   max-width: 100%;
+}
+
+.card {
+  display: flex;
+  max-width: 350px;
+  flex-direction: column;
+  align-items: center;
+  height: fit-content;
+
+  padding-bottom: 1rem;
+  border-radius: 0.5em;
+
+  background-color: white;
+  box-shadow: 0 29px 38px 0px rgb(0 0 0 / 43%);
+  padding: 1rem 2.5rem;
+}
+
+.card span {
+  display: inline-block;
+  transition: transform 200ms;
+}
+
+.card h2 {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.card p {
+  margin: 0;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: rgba(var(--card-rgb), 0.1);
+    border: 1px solid rgba(var(--card-border-rgb), 0.15);
+  }
+
+  .card:hover span {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .card:hover span {
+    transform: none;
+  }
 }

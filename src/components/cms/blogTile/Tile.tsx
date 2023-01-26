@@ -10,16 +10,16 @@ export default function Tile(tile: BlogTile): JSX.Element {
   return (
     <div
       onClick={() => onClick(tile.slug)}
-      className={styles.tile}
-      key={tile.sys.id}
+      className={styles.card}
+      key={`${tile.sys.id}  ${Math.random()}`}
     >
-      <h4>{tile.title}</h4>
       <img
-        src={`${tile.image.url}`}
+        src={tile?.tileImage?.url ? tile.tileImage.url : tile.image.url}
         alt={tile.title}
         className={styles.tileImage}
       />
-      <h6>{tile.tileDescription}</h6>
+      <h2>{tile.title}</h2>
+      <p>{tile.tileDescription}</p>
     </div>
   )
 }

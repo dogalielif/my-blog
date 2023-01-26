@@ -18,6 +18,19 @@ const getHomePageGQL = `
               ${contentfulBase}
               ${blogTile}
             }
+            ...on ParallaxImage {
+              ${contentfulBase}
+              width
+              text
+              textColor
+              image {
+                url
+                title
+                width
+                height
+                description
+              }
+            }
           }
         }
       }

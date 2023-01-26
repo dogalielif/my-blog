@@ -8,6 +8,10 @@ const carousel = `
         ${contentfulBase}
         image {
           url
+          title
+          width
+          height
+          description
         }
         title
         description

@@ -1,4 +1,4 @@
-import { ContentfulBase } from './contentfulBase'
+import { ContentfulBase, Image } from './contentfulBase'
 
 export interface CarouselProps {
   title: string
@@ -9,8 +9,6 @@ export interface CarouselProps {
 
 interface CarouselImage extends ContentfulBase {
   title: string
-  image: {
-    url: string
-  }
+  image: Image
   description: string
 }

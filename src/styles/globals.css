@@ -84,7 +84,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 2rem 6rem;
+  padding: 4rem 6rem;
   min-height: 100vh;
 }
 
@@ -111,5 +111,6 @@ a {
 }
 
 section {
+  width: 100%;
   margin-bottom: 1rem;
 }

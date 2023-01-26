@@ -7,10 +7,12 @@ import {
 } from '@/utils/apolloContentfulClient'
 import componentMapping from '@/utils/contentfulComponentMapping'
 import { ContentfulBase } from '@/interfaces/contentfulBase'
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: any) {
+  console.log(props)
   return (
     <>
       <Head>
@@ -24,9 +26,9 @@ export default function Home(props: any) {
           const componentName = item?.['__typename']
           const Component = componentMapping[componentName]
           return Component ? (
-            <Component key={item.sys.id} {...item} />
+            <Component key={`${item.sys.id} ${Math.random()}`} {...item} />
           ) : (
-            <div>In Progress...</div>
+            <div key={`${item.sys.id} ${Math.random()}`}>In Progress...</div>
           )
         })}
       </main>
@@ -59,6 +61,7 @@ export async function getServerSideProps() {
   return {
     props: {
       page: page,
+      revalidate: 10,
     },
   }
 }
