@@ -10,7 +10,6 @@
   width: inherit;
   display: flex;
   max-height: 100vh;
-  flex-flow: column wrap;
   row-gap: 1rem;
   justify-content: flex-start;
   align-items: center;

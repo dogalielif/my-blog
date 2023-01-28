@@ -32,8 +32,7 @@ export default function PostDetail(props: BlogPostProps) {
 
 export async function getServerSideProps(context: any) {
   const { resolvedUrl } = context
-  const pageSlug = resolvedUrl.split('/')?.[2] || '/'
-  const post = await getPostBySlug(`/${pageSlug}`)
+  const post = await getPostBySlug(`${resolvedUrl}`)
   return {
     props: {
       ...post,

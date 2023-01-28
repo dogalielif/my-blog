@@ -1,18 +1,15 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import {
-  getAllContentfulBlogPosts,
-  getHomePage,
-} from '@/utils/apolloContentfulClient'
+import { getMainNavigationMenu, getPage } from '@/utils/apolloContentfulClient'
 import componentMapping from '@/utils/contentfulComponentMapping'
 import { ContentfulBase } from '@/interfaces/contentfulBase'
-import Navbar from '@/components/Navbar'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { options } from '@/utils/richTextParse'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: any) {
-  console.log(props)
   return (
     <>
       <Head>
@@ -22,15 +19,25 @@ export default function Home(props: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {props.page.blocksCollection.items.map((item: ContentfulBase) => {
-          const componentName = item?.['__typename']
-          const Component = componentMapping[componentName]
-          return Component ? (
-            <Component key={`${item.sys.id} ${Math.random()}`} {...item} />
-          ) : (
-            <div key={`${item.sys.id} ${Math.random()}`}>In Progress...</div>
-          )
-        })}
+        <>
+          {props.title && <h1>{props.title}</h1>}
+          {props.text &&
+            props?.text?.json?.content?.map((item: any) =>
+              documentToReactComponents(item, options(props?.text?.links)),
+            )}
+          {props.blocksCollection.items.length > 0 &&
+            props.blocksCollection.items.map((item: ContentfulBase) => {
+              const componentName = item?.['__typename']
+              const Component = componentMapping[componentName]
+              return Component ? (
+                <Component key={`${item.sys.id} ${Math.random()}`} {...item} />
+              ) : (
+                <div key={`${item.sys.id} ${Math.random()}`}>
+                  In Progress...
+                </div>
+              )
+            })}
+        </>
       </main>
     </>
   )
@@ -56,8 +63,10 @@ export default function Home(props: any) {
 //     },
 //   };
 // }
-export async function getServerSideProps() {
-  const page = await getHomePage()
+
+export async function getServerSideProps(context: any) {
+  const { resolvedUrl } = context
+  const page = await getPage(resolvedUrl)
   return {
     props: {
       page: page,

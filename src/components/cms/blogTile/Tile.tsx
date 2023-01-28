@@ -5,7 +5,7 @@ import { BlogTile } from '@/interfaces/blogTile'
 export default function Tile(tile: BlogTile): JSX.Element {
   const router = useRouter()
   const onClick = (slug: string): void => {
-    router.push(`/posts/${slug}`)
+    router.push(`${slug}`)
   }
   return (
     <div
@@ -18,7 +18,7 @@ export default function Tile(tile: BlogTile): JSX.Element {
         alt={tile.title}
         className={styles.tileImage}
       />
-      <h2>{tile.title}</h2>
+      <h2>{tile.tileTitle ? tile.tileTitle : tile.title}</h2>
       <p>{tile.tileDescription}</p>
     </div>
   )

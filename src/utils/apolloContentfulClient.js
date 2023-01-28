@@ -2,7 +2,9 @@ import {
   getAllBlogPostsGQL,
   getAllBlogPostsBySlugGQL,
 } from '@/graphql/blogPostCollection'
-import getHomePageGQL from '@/graphql/homePage'
+import getPageGQL from '@/graphql/pageBySlug'
+import getGlobalConfigGQL from '@/graphql/globalConfig'
+import getMainNavigationMenuGQL from '@/graphql/mainNavigationMenu'
 import {
   ApolloClient,
   InMemoryCache,
@@ -66,10 +68,11 @@ export const getAllContentfulBlogPosts = async () => {
   return data.blogPostCollection.items
 }
 
-export const getHomePage = async () => {
+export const getPage = async (pageSlug) => {
+  const page = pageSlug === '/' ? '/home' : pageSlug
   const { data } = await client.query({
     query: gql`
-      ${getHomePageGQL}
+      ${getPageGQL(page)}
     `,
   })
   return data.pageCollection.items[0]
@@ -82,6 +85,24 @@ export const getPostBySlug = async (slug) => {
     `,
   })
   return data.blogPostCollection.items?.[0] || []
+}
+
+export const getMainNavigationMenu = async () => {
+  const { data } = await client.query({
+    query: gql`
+      ${getMainNavigationMenuGQL}
+    `,
+  })
+  return data.navbarCollection.items[0]
+}
+
+export const getGlobalConfig = async () => {
+  const { data } = await client.query({
+    query: gql`
+      ${getGlobalConfigGQL}
+    `,
+  })
+  return data.configCollection.items[0]
 }
 
 export default client

@@ -1,4 +1,4 @@
-.mainBar {
+.navbar {
   position: fixed;
   top: 0;
   display: flex;
@@ -18,4 +18,32 @@
   background-color: white;
   padding: 4px;
   border: 1px solid black;
+}
+
+.socialIcon {
+  width: 2.5rem;
+  padding: 4px;
+}
+
+.navigationPages {
+  height: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.navigationPage {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.navigationPage:hover {
+    color: white;
+    background-color: blue;
+}
+
+.navigationPage:hover::after {
+  content: "+"
 }

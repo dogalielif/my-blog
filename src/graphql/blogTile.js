@@ -5,23 +5,39 @@ const blogTile = `
     blogItemsCollection {
       total
       items{
-        ${contentfulBase}
-        slug
-        title
-        tileDescription
-        tileImage {
-          url
-          title
-          width
-          height
-          description
+        ...on MainCategory {
+          ${contentfulBase}
+          slug
+          tileTitle
+          tileDescription
+          tileImage {
+            url
+            title
+            width
+            height
+            description
+          }
         }
-        image {
-          url
+        ...on BlogPost {
+          ${contentfulBase}
+          slug
+          tileTitle
+          tileDescription
+          tileImage {
+            url
+            title
+            width
+            height
+            description
+          }
           title
-          width
-          height
-          description
+          image {
+            url
+            title
+            width
+            height
+            description
+          }
         }
       }
     }`

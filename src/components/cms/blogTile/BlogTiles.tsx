@@ -5,13 +5,19 @@ import Tile from './Tile'
 export default function BlogTiles(props: BlogTilesProps): JSX.Element {
   const tiles = props.blogItemsCollection.items
 
+  const flowStyle = tiles.length > 4 ? 'column wrap' : 'row wrap'
+  const justify = tiles.length > 4 ? 'flex-start' : 'space-between'
+
   // const firstColumn = tiles.filter((item, index) => index % 3 === 1)
   // const secondolumn = tiles.filter((item, index) => index % 3 === 2)
   // const thirdColumn = tiles.filter((item, index) => index % 3 === 0)
 
   return (
     <section>
-      <div className={styles.tilesContainer}>
+      <div
+        className={styles.tilesContainer}
+        style={{ flexFlow: flowStyle, justifyContent: justify }}
+      >
         {tiles.map((tile) => {
           return <Tile key={`${tile.sys.id} ${Math.random()}`} {...tile} />
         })}

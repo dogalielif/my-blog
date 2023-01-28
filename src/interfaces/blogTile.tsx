@@ -9,6 +9,7 @@ export interface BlogTilesProps {
 
 export interface BlogTile extends ContentfulBase {
   title: string
+  tileTitle: string
   slug: string
   tileDescription: string
   tileImage: Image
