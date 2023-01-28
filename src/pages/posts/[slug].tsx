@@ -5,7 +5,6 @@ import { getPostBySlug } from '@/utils/apolloContentfulClient'
 import { options } from '@/utils/richTextParse'
 import Head from 'next/head'
 import styles from '@/styles/PostDetailPage.module.css'
-import Navbar from '@/components/Navbar'
 
 export default function PostDetail(props: BlogPostProps) {
   return (
@@ -18,12 +17,14 @@ export default function PostDetail(props: BlogPostProps) {
       </Head>
       <main className="page">
         <Banner image={props.image}></Banner>
-        <div className={styles.pageTitle}>
-          <h1>{props.title}</h1>
+        <div className={styles.blogPost}>
+          <div className={styles.pageTitle}>
+            <h1>{props.title}</h1>
+          </div>
+          {props?.body?.json?.content?.map((item: any) =>
+            documentToReactComponents(item, options(props.body.links)),
+          )}
         </div>
-        {props?.body?.json?.content?.map((item: any) =>
-          documentToReactComponents(item, options(props.body.links)),
-        )}
       </main>
     </>
   )

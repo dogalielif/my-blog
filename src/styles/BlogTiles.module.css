@@ -7,10 +7,13 @@
   align-items: center;
 } */
 .tilesContainer {
-  width: 100%;
+  width: inherit;
   display: flex;
+  max-height: 100vh;
+  flex-flow: column wrap;
   row-gap: 1rem;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
 }
 .tilesContainer2 {
   width: 33%;
@@ -18,7 +21,6 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  justify-content: space-between;
 }
 
 .tile {
@@ -46,6 +48,7 @@
   background-color: white;
   box-shadow: 0 29px 38px 0px rgb(0 0 0 / 43%);
   padding: 1rem 2.5rem;
+  cursor: pointer;
 }
 
 .card span {

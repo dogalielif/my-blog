@@ -5,17 +5,17 @@ import Tile from './Tile'
 export default function BlogTiles(props: BlogTilesProps): JSX.Element {
   const tiles = props.blogItemsCollection.items
 
-  const firstColumn = tiles.filter((item, index) => index % 3 === 1)
-  const secondolumn = tiles.filter((item, index) => index % 3 === 2)
-  const thirdColumn = tiles.filter((item, index) => index % 3 === 0)
+  // const firstColumn = tiles.filter((item, index) => index % 3 === 1)
+  // const secondolumn = tiles.filter((item, index) => index % 3 === 2)
+  // const thirdColumn = tiles.filter((item, index) => index % 3 === 0)
 
   return (
     <section>
       <div className={styles.tilesContainer}>
-        {/* {tiles.map((tile) => {
+        {tiles.map((tile) => {
           return <Tile key={`${tile.sys.id} ${Math.random()}`} {...tile} />
-        })} */}
-        {[firstColumn, secondolumn, thirdColumn].map((items, index) => {
+        })}
+        {/* {[firstColumn, secondolumn, thirdColumn].map((items, index) => {
           return (
             <div
               key={`${index} ${Math.random()}`}
@@ -26,7 +26,7 @@ export default function BlogTiles(props: BlogTilesProps): JSX.Element {
               ))}
             </div>
           )
-        })}
+        })} */}
       </div>
     </section>
   )
