@@ -12,11 +12,14 @@ export const getAllBlogPostsGQL = `
         body {
           json
         }
+        image {
+          url
+        }
       }
     }
   }`
 
-export const getAllBlogPostsBySlugGQL = (slug) => `
+export const getBlogPostsBySlugGQL = (slug) => `
   query BlogPosts {
     blogPostCollection(limit: 1, where: {slug: "${slug}"}) {
       total
@@ -44,6 +47,46 @@ export const getAllBlogPostsBySlugGQL = (slug) => `
             }
           }
         }
+      }
+    }
+  }`
+
+export const getBlogPostsBySubCategoryGQL = (subCategoryId) => `
+  query BlogPosts {
+    blogPostCollection(where: {subCategory: "${subCategoryId}"}) {
+      total
+      items {
+        ${contentfulBase}
+        title
+        slug
+        image {
+          url
+        }
+        tileTitle
+        tileImage {
+          url
+        }
+        tileDescription
+      }
+    }
+  }`
+
+export const getBlogPostsByMainCategoryGQL = (mainCategoryId) => `
+  query BlogPosts {
+    blogPostCollection(where: {mainCategory: {sys: {id: "${mainCategoryId}"}}}) {
+      total
+      items {
+        ${contentfulBase}
+        title
+        slug
+        image {
+          url
+        }
+        tileTitle
+        tileImage {
+          url
+        }
+        tileDescription
       }
     }
   }`

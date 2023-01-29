@@ -21,7 +21,12 @@ export const options = (links) => {
         return (
           <img
             src={asset.url}
-            style={{ alignSelf: 'center', margin: '1rem auto' }}
+            style={{
+              display: 'block',
+              alignSelf: 'center',
+              margin: '1rem auto',
+              maxWidth: '50%',
+            }}
             alt="My image alt text"
           />
         )

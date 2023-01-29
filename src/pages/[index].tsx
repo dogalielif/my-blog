@@ -6,10 +6,12 @@ import componentMapping from '@/utils/contentfulComponentMapping'
 import { ContentfulBase } from '@/interfaces/contentfulBase'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { options } from '@/utils/richTextParse'
+import BlogTiles from '@/components/cms/blogTile/BlogTiles'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(props: any) {
+  const { page, subCategories, relatedPosts } = props
   return (
     <>
       <Head>
@@ -20,15 +22,46 @@ export default function Home(props: any) {
       </Head>
       <main className={styles.main}>
         <>
-          {props.title && <h1>{props.title}</h1>}
-          {props.text &&
-            props?.text?.json?.content?.map((item: any) =>
-              documentToReactComponents(item, options(props?.text?.links)),
+          {page.title && <h1>{page.title}</h1>}
+          {page.text &&
+            page?.text?.json?.content?.map((item: any) =>
+              documentToReactComponents(item, options(page?.text?.links)),
             )}
-          {props.blocksCollection.items.length > 0 &&
-            props.blocksCollection.items.map((item: ContentfulBase) => {
+          {/* {subCategories && subCategories.length > 0 && (
+            <BlogTiles
+              title={'Sub Categories'}
+              blogItemsCollection={{ items: [...subCategories] }}
+            />
+          )}
+          {relatedPosts && relatedPosts.length > 0 && (
+            <BlogTiles
+              title={'Posts Related'}
+              blogItemsCollection={{ items: [...relatedPosts] }}
+            />
+          )} */}
+          {page.blocksCollection.items.length > 0 &&
+            page.blocksCollection.items.map((item: any) => {
               const componentName = item?.['__typename']
               const Component = componentMapping[componentName]
+              if (componentName === 'Placeholder') {
+                return (
+                  <>
+                    <BlogTiles
+                      title={
+                        item.type === 'Posts'
+                          ? 'Posts Related'
+                          : 'Sub Categories'
+                      }
+                      blogItemsCollection={{
+                        items:
+                          item.type === 'Posts'
+                            ? [...relatedPosts]
+                            : [...subCategories],
+                      }}
+                    />
+                  </>
+                )
+              }
               return Component ? (
                 <Component key={`${item.sys.id} ${Math.random()}`} {...item} />
               ) : (
@@ -41,6 +74,17 @@ export default function Home(props: any) {
       </main>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const { resolvedUrl } = context
+  const page = await getPage(resolvedUrl)
+  return {
+    props: {
+      page: page,
+      revalidate: 10,
+    },
+  }
 }
 
 // Use graphql without apollo client
@@ -63,14 +107,3 @@ export default function Home(props: any) {
 //     },
 //   };
 // }
-
-export async function getServerSideProps(context: any) {
-  const { resolvedUrl } = context
-  const page = await getPage(resolvedUrl)
-  return {
-    props: {
-      page: page,
-      revalidate: 10,
-    },
-  }
-}

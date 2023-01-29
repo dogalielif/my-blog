@@ -12,6 +12,14 @@ const getNavigationMenuGQL = `
               ${contentfulBase}
               slug
               navbarTitle
+              subCategoriesCollection {
+                total
+                items {
+                  ${contentfulBase}
+                  navbarTitle
+                  slug
+                }
+              }
             }
             ...on NavigationItem {
               ${contentfulBase}

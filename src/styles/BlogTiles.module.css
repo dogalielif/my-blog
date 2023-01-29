@@ -11,7 +11,7 @@
   display: flex;
   max-height: 100vh;
   row-gap: 1rem;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
 }
 .tilesContainer2 {
@@ -83,4 +83,8 @@
   .card:hover span {
     transform: none;
   }
+}
+
+.tilesTitle {
+  margin: 2rem 0;
 }

@@ -15,16 +15,41 @@ export default function Navbar(props: any) {
           />
         </Link>
         {navbarItems && navbarItems.length && (
-          <div className={styles.navigationPages}>
+          <div
+            className={styles.navigationPages}
+            style={{ position: 'relative' }}
+          >
             {navbarItems?.map((item: any) => {
               return (
-                <Link
-                  className={styles.navigationPage}
-                  key={item.sys.id}
-                  href={item.slug ? item.slug : '/'}
-                >
-                  {item.navbarTitle}
-                </Link>
+                <div key={item.sys.id}>
+                  <Link
+                    className={
+                      item?.['__typename'] === 'MainCategory' &&
+                      item.subCategoriesCollection.items.length > 0
+                        ? styles.navigationCategory
+                        : styles.navigationPage
+                    }
+                    href={item.slug ? item.slug : '/'}
+                  >
+                    {item.navbarTitle}
+                  </Link>
+                  {item?.['__typename'] === 'MainCategory' &&
+                    item.subCategoriesCollection.items.length > 0 && (
+                      <div className={styles.navbarPopover}>
+                        {item.subCategoriesCollection.items.map(
+                          (subMenuItem: any) => (
+                            <Link
+                              className={styles.subNavigationItem}
+                              key={subMenuItem.sys.id}
+                              href={subMenuItem.slug ? subMenuItem.slug : '/'}
+                            >
+                              {subMenuItem.navbarTitle}
+                            </Link>
+                          ),
+                        )}
+                      </div>
+                    )}
+                </div>
               )
             })}
           </div>

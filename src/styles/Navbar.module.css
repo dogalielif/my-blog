@@ -31,19 +31,53 @@
   display: flex;
   flex-grow: 1;
   justify-content: center;
+  align-items: center;
 }
 
-.navigationPage {
+.navigationCategory, .navigationPage {
   display: flex;
   align-items: center;
   padding: 1rem;
 }
 
-.navigationPage:hover {
+.navigationCategory:hover, .navigationPage:hover{
     color: white;
     background-color: blue;
 }
 
-.navigationPage:hover::after {
+.navigationCategory:hover + .navbarPopover {
+  display: flex;
+}
+
+.navbarPopover:hover {
+  display: flex;
+}
+
+.navigationCategory:hover::after {
+  content: "-"
+}
+
+.navigationCategory::after {
   content: "+"
+}
+
+.navbarPopover {
+  position: absolute;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  bottom: -1rem;
+  display: none;
+  top: 3rem;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  height: fit-content;
+  height: 200px;
+  padding: 1rem;
+}
+
+.subNavigationItem {
+  margin: 1rem;
 }

@@ -14,7 +14,7 @@ export default function Tile(tile: BlogTile): JSX.Element {
       key={`${tile.sys.id}  ${Math.random()}`}
     >
       <img
-        src={tile?.tileImage?.url ? tile.tileImage.url : tile.image.url}
+        src={tile?.tileImage?.url ? tile.tileImage.url : tile?.image?.url}
         alt={tile.title}
         className={styles.tileImage}
       />

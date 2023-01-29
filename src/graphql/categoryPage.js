@@ -2,13 +2,13 @@ import contentfulBase from './contentfulBase'
 import carousel from './carousel'
 import blogTile from './blogTile'
 
-const getPageGQL = (page) => `
-  query Page {
-    pageCollection(limit: 1, where: {slug: "${page}"} ) {
+const getCategoryBySlugGQL = (slug) => `
+  query Category {
+    postCategoryCollection(limit: 1, where: {slug: "${slug}"} ) {
       total
       items {
+        ${contentfulBase}
         title
-        mainCategoryPage
         text {
           json
           links {
@@ -59,4 +59,4 @@ const getPageGQL = (page) => `
     }
   }`
 
-export default getPageGQL
+export default getCategoryBySlugGQL

@@ -35,7 +35,7 @@ export async function getServerSideProps(context: any) {
   const post = await getPostBySlug(`${resolvedUrl}`)
   return {
     props: {
-      ...post,
+      page: { ...post },
     },
   }
 }

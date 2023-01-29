@@ -6,7 +6,7 @@ export default function BlogTiles(props: BlogTilesProps): JSX.Element {
   const tiles = props.blogItemsCollection.items
 
   const flowStyle = tiles.length > 4 ? 'column wrap' : 'row wrap'
-  const justify = tiles.length > 4 ? 'flex-start' : 'space-between'
+  const justify = tiles.length > 4 ? 'flex-start' : 'space-evenly'
 
   // const firstColumn = tiles.filter((item, index) => index % 3 === 1)
   // const secondolumn = tiles.filter((item, index) => index % 3 === 2)
@@ -14,6 +14,7 @@ export default function BlogTiles(props: BlogTilesProps): JSX.Element {
 
   return (
     <section>
+      {props.title && <h1 className={styles.tilesTitle}>{props.title}</h1>}
       <div
         className={styles.tilesContainer}
         style={{ flexFlow: flowStyle, justifyContent: justify }}

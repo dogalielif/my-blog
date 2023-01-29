@@ -1,8 +1,12 @@
 import {
   getAllBlogPostsGQL,
-  getAllBlogPostsBySlugGQL,
+  getBlogPostsBySlugGQL,
+  getBlogPostsBySubCategoryGQL,
+  getBlogPostsByMainCategoryGQL,
 } from '@/graphql/blogPostCollection'
 import getPageGQL from '@/graphql/pageBySlug'
+import getMainCategoryBySlugGQL from '@/graphql/mainCategory'
+import getCategoryBySlugGQL from '@/graphql/categoryPage'
 import getGlobalConfigGQL from '@/graphql/globalConfig'
 import getMainNavigationMenuGQL from '@/graphql/mainNavigationMenu'
 import {
@@ -75,13 +79,43 @@ export const getPage = async (pageSlug) => {
       ${getPageGQL(page)}
     `,
   })
-  return data.pageCollection.items[0]
+  const isMainCategory = data.pageCollection.items[0].mainCategoryPage
+  if (isMainCategory) {
+    const { data: subCategoriesData } = await client.query({
+      query: gql`
+        ${getMainCategoryBySlugGQL(page)}
+      `,
+    })
+    const mainCategoryId =
+      subCategoriesData.mainCategoryCollection.items[0].sys.id
+    const subCategories = subCategoriesData.mainCategoryCollection.items[0]
+      .subCategoriesCollection.items.length
+      ? subCategoriesData.mainCategoryCollection.items[0]
+          .subCategoriesCollection.items
+      : []
+    const { data: relatedPosts } = await client.query({
+      query: gql`
+        ${getBlogPostsByMainCategoryGQL(mainCategoryId)}
+      `,
+    })
+    const posts = relatedPosts.blogPostCollection.items
+    return {
+      page: data.pageCollection.items[0],
+      subCategories: subCategories,
+      relatedPosts: posts,
+    }
+  }
+  if (pageSlug === '/' || pageSlug === '/home') {
+    const posts = await getAllContentfulBlogPosts()
+    return { page: data.pageCollection.items[0], relatedPosts: posts }
+  }
+  return { page: data.pageCollection.items[0] }
 }
 
 export const getPostBySlug = async (slug) => {
   const { data } = await client.query({
     query: gql`
-      ${getAllBlogPostsBySlugGQL(slug)}
+      ${getBlogPostsBySlugGQL(slug)}
     `,
   })
   return data.blogPostCollection.items?.[0] || []
@@ -103,6 +137,27 @@ export const getGlobalConfig = async () => {
     `,
   })
   return data.configCollection.items[0]
+}
+
+export const getCategoryPage = async (slug) => {
+  const { data } = await client.query({
+    query: gql`
+      ${getCategoryBySlugGQL(slug)}
+    `,
+  })
+  const categoryData = data.postCategoryCollection.items[0]
+  const categoryId = categoryData?.sys?.id
+  const { data: categoryPosts } = await client.query({
+    query: gql`
+      ${getBlogPostsBySubCategoryGQL(categoryId)}
+    `,
+  })
+  const posts = categoryPosts.blogPostCollection.items
+  if (posts?.length > 0) {
+    return { categoryMetaData: categoryData, relatedPosts: posts }
+  } else {
+    return { categoryMetaData: categoryData }
+  }
 }
 
 export default client
